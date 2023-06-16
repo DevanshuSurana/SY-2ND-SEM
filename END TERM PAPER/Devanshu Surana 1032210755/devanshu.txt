@@ -1,0 +1,203 @@
+create table employee(
+emp_no int not null,
+emp_name varchar(250),
+hiredate varchar(250),
+comm int,
+net_salary int,
+dept_no int,
+designation varchar(250)
+);
+
+
+create table dept(
+emp_no int not null,
+dept_no int,
+net_salary int,
+foreign key (emp_no) references employee(emp_no)
+);
+
+
+insert into employee
+values(1,'John','17may','1200','18000','30','clerk');
+
+insert into employee
+values(2,'Smith','12April','2500','20000','20','clerk');
+
+insert into employee
+values(1,'Anuj','17may','1200','18000','10','employee');
+
+insert into employee
+values(3,'pranav','1 june','1200','18000','10','clerk');
+
+insert into employee
+values(1,'amit','29 july','1200','18000','30','manager');
+
+insert into employee
+values(1,'devanshu','1 jan','3000','85000','20','president');
+
+
+insert into employee
+values(3,'joe','1 oct','3000','85000','20','employee');
+
+insert into employee
+values(3,'ved','11 april','300','1670','30','clerk');
+
+insert into employee
+values(2,'Krish','11 april','300','1670','10','manager');
+
+insert into employee
+values(4,'Abhi','11 april','300','1670','10','president');
+
+insert into employee
+values(4,'parth','11 april','300','1670','20','manager');
+
+
+
+---------------------------------------------------------------
+
+insert into employee
+values(1,'John','17may','1200','18000','30','clerk');
+
+insert into employee
+values(3,'ved','11 april','300','1670','30','clerk');
+
+insert into employee
+values(1,'amit','29 july','1200','18000','30','manager');
+
+insert into employee
+values(2,'anna','11 april','300','1670','30','employee');
+
+insert into employee
+values(4,'Abhi','11 april','300','1670','30','president');
+
+insert into employee
+values(8,'sanika','9 nov','3000','1670','30','president');
+
+
+
+
+SELECT * FROM employee WHERE department_id NOT IN (SELECT department_id 
+FROM departments 
+WHERE manager_id BETWEEN 100 AND 200);
+
+SELECT emp_name, designtion, net_salary FROM employees WHERE dept_no='20' and net_salary>2000;
+
+SELECT *FROM employee WHERE designation=('clerk','manager') and dept_no='10';
+
+SELECT Empno, Ename, Job, Sal
+FROM Emp
+WHERE Empno NOT IN (SELECT NVL(MGR,0) FROM Emp)
+
+
+SELECT Empno, Ename, Job, Sal
+FROM Emp
+WHERE dept_no NOT IN (SELECT DISTINCT MGR FROM Emp WHERE MGR IS NOT NULL)
+
+
+SELECT *
+FROM Managers
+WHERE department_id <> 30;
+
+
+SELECT *
+FROM employee
+WHERE designation='manager' and  dept_no <> 30;
+
+
+
+
+SELECT *
+FROM employee
+WHERE designation = 'clerk'
+UNION
+SELECT *
+FROM employee
+WHERE designation= 'manager'
+UNION
+SELECT *
+FROM employee
+WHERE dept_no=10;
+
+
+SELECT *
+FROM employee
+WHERE designation='manager'
+UNION
+SELECT *
+FROM employee
+WHERE dept_no= 10
+UNION 
+SELECT *
+FROM employee
+WHERE designation='clerk'
+UNION
+SELECT *
+FROM employee
+WHERE dept_no = 20;
+
+
+SELECT *
+FROM employee
+WHERE designation='clerk'
+UNION
+SELECT *
+FROM employee
+WHERE dept_no = 20;
+
+SELECT *FROM employee WHERE dept_no='manager' UNION SELECT *FROM employee WHERE designation='clerk' UNION SELECT *FROM employee WHERE dept_no = 10;
+
+
+
+SELECT *FROM employee
+WHERE designation='manager'
+NOT IN (dept_no='30');
+
+SELECT *
+FROM employee
+WHERE designation='manager'
+NOT IN (SELECT managerId FROM employees WHERE managerId IS NOT null)
+
+
+
+CREATE VIEW emp(emp_no,emp_name,dept_no) AS SELECT emp_no,emp_name,dept_no FROM employee;
+
+
+
+
+SELECT d.depNO,d.DNAME,e.EMPNO,e.ENAME
+FROM EMP e
+INNER JOIN dept d
+ON(e.depno = d.depno)
+WHERE EXISTS(select 1 from EMP t where t.mgr = e.empNO)
+AND d.depNO in(10,20)
+
+
+
+SELECT d.depNO,d.DNAME,e.EMPNO,e.ENAME
+FROM EMP e
+INNER JOIN dept d
+ON(e.depno = d.depno)
+WHERE EXISTS(select 1 from EMP t where t.mgr = e.empNO)
+AND d.depNO in(10,20)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dont know;
+
+9.find all the details of all the managers and clerks in dept 10
+10.find all the details of all the managers and clerks in dept 10 and all the clerks in dept 20
